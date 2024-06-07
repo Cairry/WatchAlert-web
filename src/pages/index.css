@@ -1,0 +1,106 @@
+
+.dark-mode .ant-table {
+    background-color: #202020;
+    color: #ffffff;
+}
+
+.dark-mode .ant-table-thead > tr > th {
+    background-color: #202020;
+    color: #cecece;
+}
+
+.dark-mode .ant-table-tbody > tr > td {
+    background-color: #202020;
+    color: #b1b1b1;
+}
+
+.dark-mode .ant-table-tbody > tr.ant-table-row:hover > td {
+    background-color: #202020;
+}
+
+.dark-mode .ant-table {
+    border: none;
+}
+
+.dark-mode .ant-table-thead > tr > th {
+    border-bottom: 0.1px solid #b1b1b1; /* 设置表头分割线样式 */
+}
+
+.dark-mode .ant-table-tbody > tr > td {
+    border-bottom: 0.1px solid #b1b1b1; /* 设置表体分割线样式 */
+}
+
+.dark-mode .ant-pagination-item {
+    background-color: #202020;
+    border: 1px solid #202020;
+}
+
+.dark-mode .ant-pagination-item a {
+    color: #b1b1b1;
+}
+
+.dark-mode .ant-pagination.ant-pagination-mini .ant-pagination-prev .ant-pagination-item-link  {
+    color: #b1b1b1;
+}
+.dark-mode .ant-pagination.ant-pagination-mini .ant-pagination-next .ant-pagination-item-link {
+    color: #b1b1b1;
+}
+
+/* 自定义Search组件样式 */
+.dark-mode .ant-input {
+    background-color: #202020;
+    color: #b1b1b1;
+    border: 1px solid #202020;
+}
+
+.dark-mode .ant-input::placeholder {
+    color: #bbb;
+}
+
+.dark-mode .ant-input-outlined{
+    background-color: #202020;
+    color: #b1b1b1;
+    border-width: 0.1px;
+    border-color: #b1b1b1;
+}
+
+.dark-mode .ant-form-item .ant-form-item-label >label {
+    color: #b1b1b1;
+}
+
+/*定义下拉框*/
+.dark-mode .ant-select-outlined .ant-select-selector{
+    background-color: #202020;
+    color: #b1b1b1;
+    border: 0.1px solid #d9d9d9;
+}
+
+.dark-mode .ant-select-selection-placeholder, .ant-select-selection-item {
+    color: #b1b1b1;
+}
+
+.dark-mode .ant-select.ant-select-focused .ant-select-selector {
+    background: #202020;
+    color: #b1b1b1;
+    border: 0.1px solid #d9d9d9;
+}
+
+/*下拉选项框*/
+.dark-mode .ant-select-dropdown {
+    background: #323131;
+    color: #b1b1b1;
+}
+
+.dark-mode .ant-select-item-option-content {
+    color: #b1b1b1;
+}
+
+/*弹窗*/
+
+.dark-mode .ant-modal .ant-modal-content {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .ant-modal .ant-modal-close-x {
+    color: #b1b1b1;
+}

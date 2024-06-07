@@ -5,3 +5,109 @@
 .ant-card:active {
     transform: scale(0.98); /* 轻微缩小卡片 */
   }
+
+.dark-mode {
+    background-color: rgb(133, 116, 116);
+    color: #ffffff;
+}
+
+.dark-mode .ant-layout-header,
+.dark-mode .ant-layout-content,
+.dark-mode .ant-layout-footer {
+    background-color:rgb(133, 116, 116);
+    color: #ffffff;
+}
+
+.dark-mode .ant-layout-sider {
+    background-color: rgb(133, 116, 116);
+}
+
+.dark-mode .ant-menu-item-selected {
+    background-color: #1890ff !important;
+}
+
+.dark-mode .ant-dropdown-menu-item {
+    background-color: rgb(133, 116, 116);
+    color: #ffffff;
+}
+
+.dark-mode .ant-dropdown-menu-item:hover {
+    background-color: #1890ff;
+}
+
+.dark-mode .ant-avatar {
+    background-color: #7265e6;
+    color: #ffffff;
+}
+
+
+.dark-mode-header {
+    background-color: #1890ff;
+    color: #ffffff;
+}
+
+.dark-mode-header .ant-layout-header,
+.dark-mode-header .ant-layout-content,
+.dark-mode-header .ant-layout-footer {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.dark-mode-header .ant-layout-sider {
+    background-color: rgb(133, 116, 116);
+}
+
+.dark-mode-header .ant-menu-item-selected {
+    background-color: #1890ff !important;
+}
+
+.dark-mode-header .ant-dropdown-menu-item {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.dark-mode-header .ant-dropdown-menu-item:hover {
+    background-color: #1890ff;
+}
+
+.dark-mode-header .ant-avatar {
+    background-color: #7265e6;
+    color: #ffffff;
+}
+
+/*多租户文案*/
+.dark-mode .multi-tenant {
+    color: #b1b1b1; /* 调整多租户文案颜色 */
+}
+
+.dark-mode .ant-typography-link {
+    color: #b1b1b1; /* 调整链接文案颜色 */
+}
+
+.dark-mode .ant-typography-link:hover {
+    color: #b1b1b1; /* 调整链接文案悬停颜色 */
+}
+
+.light-mode .multi-tenant {
+    color: #000000; /* 调整多租户文案颜色 */
+}
+
+.light-mode .ant-typography-link {
+    color: #000000; /* 调整链接文案颜色 */
+}
+
+.light-mode .ant-typography-link:hover {
+    color: #000000; /* 调整链接文案悬停颜色 */
+}
+
+/*时间选择器*/
+.dark-mode .ant-picker-outlined{
+    background: #202020;
+    border-width: 0.5px;
+    color: #b1b1b1;
+}
+
+.dark-mode .ant-picker-input > input::placeholder {
+    color: #b1b1b1; /* 修改提示内容的字体颜色 */
+}
+

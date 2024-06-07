@@ -3,8 +3,10 @@ import ReactECharts from 'echarts-for-react';
 import { Divider, List } from 'antd';
 import { Line } from '@pansy/react-charts';
 import { getDashboardInfo } from '../api/other';
+import '../index.css'; // 引入自定义样式文件
 
-export const Home = () => {
+export const Home = (popes) => {
+    const {darkMode} = popes
     const [dashboardInfo, setDashboardInfo] = useState([]);
 
     const run = async () => {
@@ -169,11 +171,31 @@ export const Home = () => {
         interval: 1 * 60
     };
 
+    const getContentStyle = (darkMode) => {
+        if (darkMode) {
+            return {
+                background: '#202020', // 黑色背景
+                color: '#b1b1b1', // 白色文字
+            };
+        } else {
+            return {
+                background: '#ffffff', // 白色背景
+                color: '#000000', // 黑色文字
+            };
+        }
+    };
+
+    const dividerColor = () =>{
+        return {
+            borderColor: '#696969'
+        }
+    }
+
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between', height: '30vh' }}>
                 <div style={{ width: '100vh', height: '35vh', overflowY: 'auto' }}>
-                    <Divider>规则总数</Divider>
+                    <Divider style={dividerColor()}><span style={getContentStyle(darkMode)}>规则总数</span></Divider>
                     <ReactECharts
                         option={allAlertRulesOption}
                         style={{ marginTop: '-30px', height: '90%', width: '100%' }}
@@ -182,7 +204,7 @@ export const Home = () => {
                 </div>
 
                 <div style={{ width: '100vh', height: '35vh', overflowY: 'auto' }}>
-                    <Divider>当前告警总数</Divider>
+                    <Divider style={dividerColor()}><span style={getContentStyle(darkMode)}>当前告警总数</span></Divider>
                     <ReactECharts
                         option={curAlertsOption}
                         style={{ marginTop: '-30px', height: '90%', width: '100%' }}
@@ -191,7 +213,7 @@ export const Home = () => {
                 </div>
 
                 <div style={{ width: '120vh', height: '35vh', overflowY: 'auto' }}>
-                    <Divider>服务资源使用率</Divider>
+                    <Divider style={dividerColor()}><span style={getContentStyle(darkMode)}>服务资源使用率</span></Divider>
                     <Line
                         style={{ marginTop: '-30px', height: '80%', width: '100%' }}
                         {...config}
@@ -201,7 +223,7 @@ export const Home = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ width: '100vh', height: '40vh', overflowY: 'auto' }}>
-                    <Divider>最近告警列表</Divider>
+                    <Divider style={dividerColor()}><span style={getContentStyle(darkMode)}>最近告警列表</span></Divider>
                     <List
                         bordered
                         dataSource={dashboardInfo?.curAlertList ?? undefined}
@@ -221,7 +243,7 @@ export const Home = () => {
                 </div>
 
                 <div style={{ width: '70vh', height: '45vh', overflowY: 'auto' }} >
-                    <Divider>告警分布</Divider>
+                    <Divider style={dividerColor()}><span style={getContentStyle(darkMode)}>告警分布</span></Divider>
                     <ReactECharts
                         option={alarmDistributionOption}
                         style={{ marginTop: '-6vh', height: '95%', width: '110%' }}

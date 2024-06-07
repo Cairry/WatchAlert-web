@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Select, Table, message, Tag, Space, DatePicker, Tooltip, Button, Drawer } from 'antd';
+import {
+    CalendarOutlined,
+} from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { getHisEventList } from '../../../api/event';
 const { RangePicker } = DatePicker
@@ -243,8 +246,14 @@ export const AlertHisEvent = () => {
         handleList(page.current, page.pageSize)
     };
 
-    const handleShowTotal = (total, range) =>
-        `第 ${range[0]} - ${range[1]} 条 共 ${total} 条`;
+    const handleShowTotal = (total, range) => {
+        return (
+            <span style={{color:'#b1b1b1'}}>
+                第 {range[0]} - {range[1]} 条 共 {total} 条
+            </span>
+            )
+
+    }
 
     return (
         <div>
@@ -319,6 +328,8 @@ export const AlertHisEvent = () => {
                         showTime={{
                             format: 'HH:mm:ss',
                         }}
+                        suffixIcon={<span><CalendarOutlined style={{color: '#b1b1b1'}}/></span>}
+                        placeholder={['开始时间', '结束时间']}
                         presets={[
                             {
                                 label: <span aria-label="Current Time to End of Day">Now ~ EOD</span>,

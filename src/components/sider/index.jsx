@@ -17,7 +17,7 @@ import { Menu, Layout } from 'antd';
 
 export const ComponentSider = (props) => {
     const { SubMenu } = Menu
-    const { userInfo } = props
+    const { userInfo,darkMode } = props
     const navigate = useNavigate()
     const [selectedMenuKey, setSelectedMenuKey] = useState('')
 
@@ -31,8 +31,8 @@ export const ComponentSider = (props) => {
     const renderMenu = () => {
         if (userInfo && userInfo.role === 'admin') {
             return (
-                <>
-                    <Menu
+                <div style={getSiderStyle(darkMode)}>
+                    <Menu style={getSiderStyle(darkMode)}
                         theme='light'
                         mode='inline'
                         selectedKeys={[selectedMenuKey]}
@@ -75,12 +75,12 @@ export const ComponentSider = (props) => {
                         {/*</SubMenu>*/}
                         <Menu.Item key='9' onClick={(e) => handleMenuClick(e.key, '/auditLog')} icon={<FileDoneOutlined />}>日志审计</Menu.Item >
                     </Menu>
-                </>
+                </div>
             );
         } else {
             return (
-                <>
-                    <Menu
+                <div style={getSiderStyle(darkMode)}>
+                    <Menu style={getSiderStyle(darkMode)}
                         theme='light'
                         mode='inline'
                         selectedKeys={[selectedMenuKey]}
@@ -108,19 +108,37 @@ export const ComponentSider = (props) => {
                         <Menu.Item key='8' onClick={(e) => handleMenuClick(e.key, '/dashboard')} icon={<DashboardOutlined />}>仪表盘</Menu.Item >
 
                     </Menu>
-                </>
+                </div>
             );
+        }
+    };
+
+    const getSiderStyle = (darkMode) => {
+        const commonStyle = {
+            overflow: 'auto',
+            height: '100%',
+            // background: 'white',
+            borderRadius: '12px',
+        };
+
+        if (darkMode) {
+            return {
+                ...commonStyle,
+                background: 'rgb(97,84,84)', // 黑色背景
+                color: '#000000', // 黑色文字
+            };
+        } else {
+            return {
+                ...commonStyle,
+                background: '#ffffff', // 白色背景
+                color: '#000000', // 黑色文字
+            };
         }
     };
 
     return (
         <Layout.Sider
-            style={{
-                overflow: 'auto',
-                height: '100%',
-                background: 'white',
-                borderRadius: '12px',
-            }}
+            style={getSiderStyle(darkMode)}
         >
             {renderMenu()}
         </Layout.Sider>

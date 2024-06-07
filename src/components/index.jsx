@@ -10,7 +10,7 @@ import {
     Dropdown,
     Space
 } from 'antd'
-import { DownOutlined, LeftOutlined } from '@ant-design/icons';
+import { DownOutlined, LeftOutlined,SunFilled,MoonFilled } from '@ant-design/icons';
 import logoIcon from '../img/logo.jpeg'
 import githubIcon from '../img/github_logo.png'
 import { getUserInfo } from '../api/user'
@@ -27,7 +27,8 @@ export const ComponentsContent = (props) => {
     const [userInfo, setUserInfo] = useState(null)
     const [loading, setLoading] = useState(false)
     const [tenantList, setTenantList] = useState([])
-    const [getTenantStatus, setTenantStatus] = useState(null);
+    const [getTenantStatus, setTenantStatus] = useState(null)
+    const [darkMode, setDarkMode] = useState(false)
 
     Auth()
 
@@ -82,7 +83,7 @@ export const ComponentsContent = (props) => {
                 localStorage.setItem('TenantID', opts[0].value)
                 localStorage.setItem('TenantIndex', opts[0].index)
             }
-            setTenantStatus(true);
+            setTenantStatus(true)
         } catch (error) {
             console.error(error)
         }
@@ -92,6 +93,20 @@ export const ComponentsContent = (props) => {
         fetchTenantList()
         run()
     }, [])
+
+    useEffect(() => {
+        const isDark = localStorage.getItem('darkMode') === 'true'
+        setDarkMode(isDark)
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('darkMode', darkMode)
+        if (darkMode) {
+            document.body.classList.add('dark-mode')
+        } else {
+            document.body.classList.remove('dark-mode')
+        }
+    }, [darkMode])
 
     if (loading || !getTenantStatus) {
         return (
@@ -126,32 +141,87 @@ export const ComponentsContent = (props) => {
                 </Menu.Item>
             ))}
         </Menu>
-    );
+    )
+
+    const getContainerStyle = (darkMode) => {
+        const commonStyle = {
+            height: '60px',
+            margin: '16px 16px 0',
+            borderRadius: borderRadiusLG,
+            display: 'flex',
+            alignItems: 'center',
+        };
+
+        if (darkMode) {
+            return {
+                ...commonStyle,
+                background: 'rgb(97,84,84)', // 黑色背景
+                color: '#000000', // 黑色文字
+            };
+        } else {
+            return {
+                ...commonStyle,
+                background: '#ffffff', // 白色背景
+                color: '#000000', // 黑色文字
+            };
+        }
+    };
+
+    const getContentStyle = (darkMode) => {
+        const commonStyle = {
+            height: 'calc(100vh - 80px - 65px)',
+            margin: '0px 16px 0',
+            borderRadius: '10px'
+        };
+
+        if (darkMode) {
+            return {
+                ...commonStyle,
+                background: 'rgb(97,84,84)', // 黑色背景
+                color: '#000000', // 黑色文字
+            };
+        } else {
+            return {
+                ...commonStyle,
+                background: '#ffffff', // 白色背景
+                color: '#000000', // 黑色文字
+            };
+        }
+    };
+
+    const getLeftOutlined = (darkMode) => {
+        if (darkMode) {
+            return {
+                color: '#b1b1b1', // 白色文字
+            };
+        } else {
+            return {
+                color: '#000000', // 黑色文字
+            };
+        }
+    };
+
+    const clonedComponent = React.cloneElement(c, { darkMode: darkMode });
 
     return (
         <>
-            <Layout style={{ height: '100vh', overflow: 'hidden', }}>
+            <Layout className={darkMode ? 'dark-mode' : ''} style={{ height: '100vh', overflow: 'hidden', }} >
                 {/* 导航栏 */}
                 <div style={{
                     marginLeft: '15px',
                     marginTop: '89px',
                 }}>
-                    {<ComponentSider userInfo={userInfo} />}
+                    {<ComponentSider className={darkMode ? 'dark-mode' : ''} userInfo={userInfo} darkMode={darkMode} />}
                 </div>
 
                 {/* 内容区 */}
-                <Layout className="site-layout" >
+                <Layout className={darkMode ? 'dark-mode' : ''} >
                     {/* 右侧顶部 */}
-                    <Layout style={{ marginLeft: '-216px', padding: 0, borderRadius: '12px', }}>
+                    <Layout className={darkMode ? 'dark-mode' : 'light-mode'} style={{ marginLeft: '-216px', padding: 0, borderRadius: '12px', }}>
                         <Header
-                            style={{
-                                height: '60px',
-                                margin: '16px 16px 0',
-                                background: colorBgContainer,
-                                borderRadius: borderRadiusLG,
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}>
+                            className={darkMode ? 'dark-mode-header' : 'light-mode'}
+                            style={getContainerStyle(darkMode)}
+                            >
 
                             <div style={{ marginTop: '25px', marginLeft: '-30px' }}>
                                 <div className="footer">
@@ -164,8 +234,8 @@ export const ComponentsContent = (props) => {
                             <div style={{ fontSize: 15, fontWeight: 'bold' }}>
                                 <div style={{ position: 'absolute', left: '100px', top: '12px' }}>
                                     <Dropdown overlay={menu} trigger={['click']}>
-                                        <Typography.Link style={{ fontSize: 15, color: 'black' }}>
-                                            <Space>
+                                        <Typography.Link className="multi-tenant">
+                                            <Space >
                                                 多租户
                                                 <DownOutlined />
                                             </Space>
@@ -174,43 +244,44 @@ export const ComponentsContent = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{ position: 'absolute', top: '12px', right: '30px', bottom: '10px' }}>                            {userInfo !== null ? (
-                                <Popover content={content} trigger="hover" placement="bottom">
-                                    <Avatar
-                                        style={{
-                                            backgroundColor: '#7265e6',
-                                            verticalAlign: 'middle',
-                                        }}
-                                        size="large"
-                                    >
-                                        {userInfo.username}
-                                    </Avatar>
-                                </Popover>
-                            ) : null}
+                            <div style={{ display: 'flex',position: 'absolute', top: '25px', right: '30px', bottom: '10px' }}>
+                                <div style={{marginTop:'-5px'}}>
+                                    <Button type="text" onClick={() => setDarkMode(!darkMode)}>
+                                        {darkMode ? <SunFilled style={{fontSize: 25,color: '#ffffff'}}/> : <MoonFilled style={{fontSize: 25,color: '#000000'}}/>}
+                                    </Button>
+                                </div>
+                                {userInfo !== null ? (
+                                    <Popover content={content} trigger="hover" placement="bottom">
+                                        <Avatar
+                                            style={{
+                                                backgroundColor: '#7265e6',
+                                                verticalAlign: 'middle',
+                                            }}
+                                            size="large"
+                                        >
+                                            {userInfo.username}
+                                        </Avatar>
+                                    </Popover>
+                                ) : null}
                             </div>
                         </Header>
                     </Layout>
 
                     {/* 右侧内容区 */}
-                    <Layout style={{ marginTop: '15px' }}>
+                    <Layout className={darkMode ? 'dark-mode' : 'light-mode'} style={{ marginTop: '15px' }}>
                         <Content
-                            style={{
-                                height: 'calc(100vh - 80px - 65px)',
-                                margin: '0px 16px 0',
-                                background: colorBgContainer,
-                                borderRadius: borderRadiusLG,
-                                borderRadius: '10px'
-                            }}
+                            className={darkMode ? 'dark-mode' : 'light-mode'}
+                            style={getContentStyle(darkMode)}
                         >
                             <div style={{ fontSize: 15, fontWeight: 'bold', marginLeft: '1%', justifyContent: 'center', marginTop: '20px' }}>
-                                <Button type="text" shape="circle" icon={<LeftOutlined />} onClick={goBackPage} />
+                                <Button type="text" shape="circle" icon={<LeftOutlined style={getLeftOutlined(darkMode)}/>} onClick={goBackPage} />
                                 {name}
                             </div>
                             <div
                                 className="site-layout-background"
                                 style={{ padding: 24, textAlign: 'center', height: '10px' }}
                             >
-                                {c}
+                                {clonedComponent}
                             </div>
                         </Content>
                     </Layout>
@@ -226,5 +297,4 @@ export const ComponentsContent = (props) => {
             </Layout >
         </>
     )
-
 }

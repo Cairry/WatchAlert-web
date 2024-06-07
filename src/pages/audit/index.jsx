@@ -3,20 +3,22 @@ import { Table, message, Button, Drawer, Select, Input } from 'antd';
 import { listAuditLog, searchAuditLog } from '../../api/auditLog';
 import moment from 'moment';
 import JsonViewer from 'react-json-view';
+import '../index.css'; // 引入自定义样式文件
 
 export const AuditLog = () => {
-    const { Search } = Input
+    const { Search } = Input;
     const [list, setList] = useState([]);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [annotations, setAnnotations] = useState('');
-    const [scope, setScope] = useState('')
-    const [startTimestamp, setStartTimestamp] = useState(null)
-    const [endTimestamp, setEndTimestamp] = useState(null)
+    const [scope, setScope] = useState('');
+    const [startTimestamp, setStartTimestamp] = useState(null);
+    const [endTimestamp, setEndTimestamp] = useState(null);
     const [pagination, setPagination] = useState({
         pageIndex: 1,
         pageSize: 10,
         total: 0,
     });
+
     const columns = [
         {
             title: '时间',
@@ -67,7 +69,7 @@ export const AuditLog = () => {
                 </span>
             )
         },
-    ]
+    ];
 
     useEffect(() => {
         handleList(pagination.pageIndex, pagination.pageSize);
@@ -87,7 +89,7 @@ export const AuditLog = () => {
                 }
             }
 
-            const res = await listAuditLog(params)
+            const res = await listAuditLog(params);
             setPagination({
                 pageIndex: res.data.PageIndex,
                 pageSize: res.data.PageSize,
@@ -101,40 +103,38 @@ export const AuditLog = () => {
     };
 
     const handlePageChange = (page) => {
-        setPagination({ ...pagination, pageIndex: page.pageIndex, pageSize: page.pageSize });
-        handleList(page.pageIndex, page.pageSize)
+        setPagination({ ...pagination, pageIndex: page.current, pageSize: page.pageSize });
+        handleList(page.current, page.pageSize);
     };
 
-    const handleShowTotal = (total, range) =>
-        `第 ${range[0]} - ${range[1]} 条 共 ${total} 条`;
+    const handleShowTotal = (total, range) =>{
+        return <span style={{color:'#b1b1b1'}}>第 {range[0]} - {range[1]} 条 共 {total} 条</span>
+    }
 
     const showDrawer = (record) => {
         setDrawerOpen(true);
-        setAnnotations(record)
+        setAnnotations(record);
     };
 
     const onCloseDrawer = () => {
         setDrawerOpen(false);
     };
 
-    let annotationsJson = ""
+    let annotationsJson = "";
     if (annotations) {
         annotationsJson = JSON.parse(annotations);
     }
 
     const onSearch = async (value) => {
         try {
-
-            console.log(pagination)
-
             const params = {
                 pageIndex: pagination.pageIndex,
                 pageSize: pagination.pageSize,
                 scope: scope,
                 query: value,
-            }
+            };
 
-            const res = await searchAuditLog(params)
+            const res = await searchAuditLog(params);
 
             setPagination({
                 pageIndex: res.data.PageIndex,
@@ -142,11 +142,11 @@ export const AuditLog = () => {
                 total: res.data.TotalCount,
             });
 
-            setList(res.data.List)
+            setList(res.data.List);
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-    }
+    };
 
     return (
         <div>
@@ -167,37 +167,16 @@ export const AuditLog = () => {
                     placeholder="时间范围"
                     style={{
                         flex: 1,
-                        marginRight: '10px'
+                        marginRight: '10px',
                     }}
                     options={[
-                        {
-                            value: '1',
-                            label: '近 1 天',
-                        },
-                        {
-                            value: '3',
-                            label: '近 3 天'
-                        },
-                        {
-                            value: '5',
-                            label: '近 5 天'
-                        },
-                        {
-                            value: '9',
-                            label: '近 9 天'
-                        },
-                        {
-                            value: '15',
-                            label: '近 15 天'
-                        },
-                        {
-                            value: '20',
-                            label: '近 20 天'
-                        },
-                        {
-                            value: '30',
-                            label: '近 30 天'
-                        },
+                        { value: '1', label: '近 1 天' },
+                        { value: '3', label: '近 3 天' },
+                        { value: '5', label: '近 5 天' },
+                        { value: '9', label: '近 9 天' },
+                        { value: '15', label: '近 15 天' },
+                        { value: '20', label: '近 20 天' },
+                        { value: '30', label: '近 30 天' },
                     ]}
                     onChange={(record) => { setScope(record) }}
                 />
@@ -218,7 +197,6 @@ export const AuditLog = () => {
                         pageIndex: pagination.pageIndex ?? 1,
                         pageSize: pagination.pageSize ?? 10,
                         total: pagination?.total ?? 0,
-                        showQuickJumper: true,
                         showSizeChanger: true,
                         showTotal: handleShowTotal,
                     }}

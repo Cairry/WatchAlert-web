@@ -19,12 +19,17 @@ import { Tenants } from "../pages/tenant";
 import { GrafanaDashboardComponent } from "../pages/dashboards/dashboard";
 import { DashboardFolder } from "../pages/dashboards/folder";
 import { AuditLog } from "../pages/audit";
+import TestMode from "../pages/test";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
     {
         path: '/',
         element: <ComponentsContent name="监控分析" c={<Home />} />,
+    },
+    {
+        path: '/test',
+        element: <TestMode />,
     },
     {
         path: '/login',
